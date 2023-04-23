@@ -16,11 +16,20 @@ export const counterSlice = createSlice({
       state.currentChannelId = action.payload.currentChannelId;
       state.messages = action.payload.messages;
     },
+    addMessage: (state, action) => {
+      const messageExists = Boolean(
+        state.messages.find((message) => message.id === action.payload.id),
+      );
+
+      if (!messageExists) {
+        state.messages.push(action.payload);
+      }
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { init } = counterSlice.actions;
+export const { addMessage, init } = counterSlice.actions;
 
 export const selectChannels = (state) => state.chats.channels;
 export const selectCurrentChannelId = (state) => state.chats.currentChannelId;
@@ -38,7 +47,7 @@ export const selectMessages = (state) => state.chats.messages;
 export const selectMessagesCount = (state) => {
   const messages = selectMessages(state);
 
-  return messages?.lenght || 0;
+  return messages?.length || 0;
 };
 
 export default counterSlice.reducer;

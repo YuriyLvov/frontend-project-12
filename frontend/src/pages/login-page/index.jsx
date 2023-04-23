@@ -8,7 +8,7 @@ import { ROUTER_PATHS } from '../../constants';
 import validator from './validator';
 
 const LoginPage = () => {
-  const { setToken } = useContext(AuthContext);
+  const { setToken, setUsername } = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (
@@ -24,6 +24,7 @@ const LoginPage = () => {
               }
 
               setToken(response.data.token);
+              setUsername(values.login);
 
               navigate(ROUTER_PATHS.MAIN_PAGE);
             })

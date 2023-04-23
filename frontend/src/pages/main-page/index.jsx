@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Container,
   Col,
@@ -8,15 +8,19 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { io } from 'socket.io-client';
 import { ROUTER_PATHS } from '../../constants';
 import { AuthContext } from '../../context/auth';
 import {
+  addMessage,
   init,
   selectChannels,
   selectCurrentChannelName,
   selectMessages,
   selectMessagesCount,
 } from '../../features/chats';
+
+const socket = io();
 
 const Channels = () => {
   const channels = useSelector(selectChannels);
@@ -54,18 +58,54 @@ const ChatMessages = () => {
 
   return (
     <Col className="chat-messages overflow-auto px-5 ">
-      {messages.map((message) => <div key={`id-${message}`}>{message}</div>)}
+      {messages.map((message) => (
+        <div key={message.id}>
+          <b>{message.username}</b>
+          <span>: </span>
+          <span>{message.body}</span>
+        </div>
+      ))}
     </Col>
   );
 };
 
-const ChatMessageInput = () => (
-  <Form className="mt-auto px-5 py-3">
-    <Form.Group className="mb-3" controlId="message">
-      <Form.Control type="text" placeholder="Введите сообщение" />
-    </Form.Group>
-  </Form>
-);
+const ChatMessageInput = () => {
+  const { username } = useContext(AuthContext);
+  const [disabled, setDisabled] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const onChange = (event) => {
+    setMessage(event.target.value);
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    setDisabled(true);
+    socket.timeout(5000).emit('newMessage', { body: message, channelId: 1, username }, (err) => {
+      if (!err) {
+        setMessage('');
+      }
+      setDisabled(false);
+      console.error(err);
+    });
+  };
+
+  return (
+    <Form className="mt-auto px-5 py-3" onSubmit={onSubmit}>
+      <Form.Group className="mb-3" controlId="message">
+        <Form.Control
+          autoComplete="off"
+          disabled={disabled}
+          type="text"
+          onChange={onChange}
+          placeholder="Введите сообщение"
+          value={message}
+        />
+      </Form.Group>
+    </Form>
+  );
+};
 
 const Chat = () => (
   <Col className="d-flex flex-column h-100">
@@ -88,6 +128,10 @@ const MainPage = () => {
       .then((response) => {
         console.log(response.data); // => { channels: [...], currentChannelId: 1, messages: [] }
         dispatch(init(response.data));
+
+        socket.on('newMessage', (payload) => {
+          dispatch(addMessage(payload));
+        });
       });
   }, []);
 
