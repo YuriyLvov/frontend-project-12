@@ -19,14 +19,20 @@ export const AuthContextProvider = ({ children }) => {
   const setUsernameStorage = useCallback((newUsername) => {
     localStorage.setItem('username', newUsername);
     setUserName(newUsername);
-  }, [setToken]);
+  }, [setUserName]);
+
+  const logOut = useCallback(() => {
+    setTokenStorage('');
+    setUsernameStorage('');
+  }, [setTokenStorage, setUsernameStorage]);
 
   const value = useMemo(() => ({
+    logOut,
     setToken: setTokenStorage,
     setUsername: setUsernameStorage,
     token,
     username,
-  }), [token, setTokenStorage]);
+  }), [token, setTokenStorage, setUsernameStorage, logOut, username]);
 
   return (
     <AuthContext.Provider value={value}>

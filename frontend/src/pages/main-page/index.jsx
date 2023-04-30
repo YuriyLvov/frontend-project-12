@@ -320,13 +320,16 @@ const MainPage = () => {
   const { token } = useContext(AuthContext);
 
   useEffect(() => {
+    if (!token) {
+      return;
+    }
+
     axios.get('/api/v1/data', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
-        console.log(response.data); // => { channels: [...], currentChannelId: 1, messages: [] }
         dispatch(init(response.data));
 
         socket.on('newMessage', (payload) => {
@@ -345,7 +348,7 @@ const MainPage = () => {
           dispatch(renameChannel(payload));
         });
       });
-  }, []);
+  }, [dispatch, token]);
 
   return (
     <Container className="container h-100 my-4 overflow-hidden rounded shadow">

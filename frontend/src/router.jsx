@@ -4,6 +4,7 @@ import Layout from './components/layout';
 import LoginPage from './pages/login-page';
 import MainPage from './pages/main-page';
 import NotFoundPage from './pages/not-found-page';
+import SignUpPage from './pages/sign-up-page';
 import { ROUTER_PATHS } from './constants';
 
 const router = createBrowserRouter([{
@@ -29,6 +30,10 @@ const router = createBrowserRouter([{
     {
       path: ROUTER_PATHS.NOT_FOUND,
       element: <NotFoundPage />,
+    },
+    {
+      path: ROUTER_PATHS.SIGN_UP,
+      element: <SignUpPage />,
     },
   ],
 
