@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 import { ROUTER_PATHS } from '../../constants';
 import { emitNewMessage, emitRemoveChannel, socket } from '../../socket';
 import { AuthContext } from '../../context/auth';
@@ -260,7 +261,7 @@ const ChatMessages = () => {
         <div key={message.id}>
           <b>{message.username}</b>
           <span>: </span>
-          <span>{message.body}</span>
+          <span>{filter.clean(message.body, '*', 2)}</span>
         </div>
       ))}
     </Col>
