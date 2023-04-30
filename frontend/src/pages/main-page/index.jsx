@@ -294,6 +294,8 @@ const ChatMessageInput = () => {
     setDisabled(true);
 
     emitNewMessage(message, username, channelId, onDone, onError);
+
+    throw new Error('Aaaaaaaaaa!!!');
   };
 
   return (
