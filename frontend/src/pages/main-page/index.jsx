@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { ROUTER_PATHS } from '../../constants';
 import { emitNewMessage, emitRemoveChannel, socket } from '../../socket';
 import { AuthContext } from '../../context/auth';
@@ -142,6 +143,7 @@ const Channels = () => {
 
     dispatch(createChannelAction(channelName));
     handleCloseChangeModal();
+    toast('Канал создан', { type: 'success' });
   };
 
   const onRenameChannel = (channelName) => {
@@ -155,6 +157,7 @@ const Channels = () => {
 
     dispatch(renameChannelAction({ id: channelIdToRename, name: channelName }));
     handleCloseChangeModal();
+    toast('Канал переименован', { type: 'success' });
   };
 
   const onChannelChange = (id) => {
@@ -174,6 +177,7 @@ const Channels = () => {
   const handleRemove = () => {
     emitRemoveChannel(channelIdToRemove);
     setShowRemoveModal(false);
+    toast('Канал удалён', { type: 'success' });
   };
 
   return (
@@ -347,6 +351,9 @@ const MainPage = () => {
         socket.on('renameChannel', (payload) => {
           dispatch(renameChannel(payload));
         });
+      }).catch((error) => {
+        console.error(error);
+        toast('Ошибка сети', { type: 'error' });
       });
   }, [dispatch, token]);
 

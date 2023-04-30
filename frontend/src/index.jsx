@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { initLocalization } from './locales';
 import store from './store';
 import { AuthContextProvider } from './context/auth';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import router from './router';
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 initLocalization();
@@ -19,6 +21,7 @@ root.render(
     <Provider store={store}>
       <AuthContextProvider>
         <RouterProvider router={router} />
+        <ToastContainer />
       </AuthContextProvider>
     </Provider>
   </React.StrictMode>,

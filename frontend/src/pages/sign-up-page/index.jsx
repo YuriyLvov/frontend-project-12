@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import { useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AuthContext } from '../../context/auth';
 import { ROUTER_PATHS } from '../../constants';
 import validator from './validator';
@@ -37,6 +38,7 @@ const SignUpPage = () => {
                 helpers.setFieldError('error', 'Такой пользователь уже существует');
               }
               console.error('error', error);
+              toast('Ошибка сети', { type: 'error' });
             });
         }}
         // eslint-disable-next-line consistent-return

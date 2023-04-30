@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { AuthContext } from '../../context/auth';
 import { ROUTER_PATHS } from '../../constants';
 import validator from './validator';
@@ -32,6 +33,7 @@ const LoginPage = () => {
             })
             .catch((error) => {
               console.error('error', error);
+              toast('Ошибка сети', { type: 'error' });
             });
         }}
         validationSchema={validator}
