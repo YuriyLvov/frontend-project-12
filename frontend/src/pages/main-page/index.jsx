@@ -61,7 +61,7 @@ const MainPage = () => {
   }, [dispatch, token, t]);
 
   return (
-    <Container className="container h-100 my-4 overflow-hidden rounded shadow">
+    <Container className="h-100 shadow rounded overflow-hidden">
       <Row bg="white" className="h-100 flex-md-row">
         <Col lg={2}>
           <Channels />
