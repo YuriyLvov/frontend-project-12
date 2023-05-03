@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
-import { ROUTER_PATHS } from '../../constants';
+import { ROUTER_PATHS, SOCKET_EVENTS } from '../../constants';
 import { emitNewMessage, emitRemoveChannel, socket } from '../../socket';
 import { AuthContext } from '../../context/auth';
 import {
@@ -294,8 +294,6 @@ const ChatMessageInput = () => {
     setDisabled(true);
 
     emitNewMessage(message, username, channelId, onDone, onError);
-
-    throw new Error('Aaaaaaaaaa!!!');
   };
 
   return (
@@ -339,19 +337,19 @@ const MainPage = () => {
       .then((response) => {
         dispatch(init(response.data));
 
-        socket.on('newMessage', (payload) => {
+        socket.on(SOCKET_EVENTS.NEW_MESSAGE, (payload) => {
           dispatch(addMessage(payload));
         });
 
-        socket.on('newChannel', (payload) => {
+        socket.on(SOCKET_EVENTS.NEW_CHANNEL, (payload) => {
           dispatch(addChannel(payload));
         });
 
-        socket.on('removeChannel', (payload) => {
+        socket.on(SOCKET_EVENTS.REMOVE_CHANNEL, (payload) => {
           dispatch(removeChannel(payload));
         });
 
-        socket.on('renameChannel', (payload) => {
+        socket.on(SOCKET_EVENTS.RENAME_CHANNEL, (payload) => {
           dispatch(renameChannel(payload));
         });
       }).catch((error) => {

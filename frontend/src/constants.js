@@ -5,4 +5,9 @@ export const ROUTER_PATHS = {
   SIGN_UP: '/sign-up',
 };
 
-export const XYI = 1;
+export const SOCKET_EVENTS = {
+  NEW_CHANNEL: 'newChannel',
+  NEW_MESSAGE: 'newMessage',
+  REMOVE_CHANNEL: 'removeChannel',
+  RENAME_CHANNEL: 'renameChannel',
+};
