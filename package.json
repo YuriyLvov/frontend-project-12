@@ -6,8 +6,8 @@
   "scripts": {
     "build": "npm run build --prefix frontend",
     "start": "start-server -s ./frontend/build",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "cd frontend && npm ci"
+    "postinstall": "cd frontend && npm ci",
+    "test-ct": "playwright test -c playwright-ct.config.js"
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,8 @@
     "leo-profanity": "^1.7.0",
     "react-i18next": "^12.2.2",
     "react-toastify": "^9.1.2"
+  },
+  "devDependencies": {
+    "@playwright/experimental-ct-react": "^1.33.0"
   }
 }
