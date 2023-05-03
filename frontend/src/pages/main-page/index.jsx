@@ -11,10 +11,10 @@ import {
   Row,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
-import { ROUTER_PATHS, SOCKET_EVENTS } from '../../constants';
+import { SOCKET_EVENTS } from '../../constants';
 import { emitNewMessage, emitRemoveChannel, socket } from '../../socket';
 import { AuthContext } from '../../context/auth';
 import {
@@ -42,6 +42,7 @@ const ChannelChangeModal = ({
 }) => {
   const [channelName, setChannelName] = useState(initialChannelName);
   const handleSubmit = initialChannelName ? onRenameChannel : onAddChannel;
+  const { t } = useTranslation();
 
   const onChange = (event) => {
     setChannelName(event.target.value);
@@ -56,7 +57,7 @@ const ChannelChangeModal = ({
     <Modal show={show} onHide={handleClose}>
       <Form className="mt-auto px-5 py-3" onSubmit={onSubmit}>
         <Modal.Header closeButton>
-          <Modal.Title>{initialChannelName ? 'Переименовать канал' : 'Добавить канал'}</Modal.Title>
+          <Modal.Title>{initialChannelName ? t('renameChannel') : t('addChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3" controlId="channelName">
@@ -70,10 +71,10 @@ const ChannelChangeModal = ({
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Отмена
+            {t('cancel')}
           </Button>
           <Button type="submit" variant="primary">
-            Отправить
+            {t('send')}
           </Button>
         </Modal.Footer>
       </Form>
@@ -86,6 +87,8 @@ const ChannelRemoveModal = ({
   handleClose,
   handleRemove,
 }) => {
+  const { t } = useTranslation();
+
   const onClick = (event) => {
     event.preventDefault();
     handleRemove();
@@ -94,17 +97,17 @@ const ChannelRemoveModal = ({
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('deleteChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        Уверены?
+        {t('areYouSure')}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          Отмена
+          {t('cancel')}
         </Button>
         <Button onClick={onClick} variant="danger">
-          Удалить
+          {t('delete')}
         </Button>
       </Modal.Footer>
     </Modal>
@@ -115,6 +118,7 @@ const Channels = () => {
   const dispatch = useDispatch();
   const channels = useSelector(selectChannels);
   const currentChannelId = useSelector(selectCurrentChannelId);
+  const { t } = useTranslation();
 
   const [channelNameForRename, setChannelNameForRename] = useState('');
   const [channelIdToRename, setChannelIdToRename] = useState(null);
@@ -144,7 +148,7 @@ const Channels = () => {
 
     dispatch(createChannelAction(channelName));
     handleCloseChangeModal();
-    toast('Канал создан', { type: 'success' });
+    toast(t('channelCreated'), { type: 'success' });
   };
 
   const onRenameChannel = (channelName) => {
@@ -158,7 +162,7 @@ const Channels = () => {
 
     dispatch(renameChannelAction({ id: channelIdToRename, name: channelName }));
     handleCloseChangeModal();
-    toast('Канал переименован', { type: 'success' });
+    toast(t('channelRenamed'), { type: 'success' });
   };
 
   const onChannelChange = (id) => {
@@ -178,14 +182,14 @@ const Channels = () => {
   const handleRemove = () => {
     emitRemoveChannel(channelIdToRemove);
     setShowRemoveModal(false);
-    toast('Канал удалён', { type: 'success' });
+    toast(t('channelDeleted'), { type: 'success' });
   };
 
   return (
     <div>
       <Row>
         <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-          <b>Каналы:</b>
+          <b>{`${t('channels')}:`}</b>
           <Button onClick={() => handleShowChangeModal()} variant="outline-primary">+</Button>
         </div>
       </Row>
@@ -209,8 +213,8 @@ const Channels = () => {
                   <Dropdown.Toggle split variant={currentChannelId === id ? 'secondary' : null} />
 
                   <Dropdown.Menu>
-                    <Dropdown.Item className="text-start w-100" onClick={() => handleShowRemoveModal(id)}>Удалить</Dropdown.Item>
-                    <Dropdown.Item className="text-start w-100" onClick={() => handleShowChangeModal(id)}>Переименовать</Dropdown.Item>
+                    <Dropdown.Item className="text-start w-100" onClick={() => handleShowRemoveModal(id)}>{t('delete')}</Dropdown.Item>
+                    <Dropdown.Item className="text-start w-100" onClick={() => handleShowChangeModal(id)}>{t('rename')}</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               ) : (
@@ -243,11 +247,12 @@ const Channels = () => {
 const ChatHeader = () => {
   const currentChannelName = useSelector(selectCurrentChannelName);
   const messagesCount = useSelector(selectMessagesCount);
+  const { t } = useTranslation();
 
   return (
     <div>
       <b>{`# ${currentChannelName}`}</b>
-      <p>{`${messagesCount} сообщений`}</p>
+      <p>{`${messagesCount} ${t('messagesCount')}`}</p>
     </div>
   );
 };
@@ -273,6 +278,7 @@ const ChatMessageInput = () => {
   const [disabled, setDisabled] = useState(false);
   const [message, setMessage] = useState('');
   const channelId = useSelector(selectCurrentChannelId);
+  const { t } = useTranslation();
 
   const onChange = (event) => {
     setMessage(event.target.value);
@@ -304,7 +310,7 @@ const ChatMessageInput = () => {
           disabled={disabled}
           type="text"
           onChange={onChange}
-          placeholder="Введите сообщение"
+          placeholder={t('enterMessage')}
           value={message}
         />
       </Form.Group>
@@ -323,6 +329,7 @@ const Chat = () => (
 const MainPage = () => {
   const dispatch = useDispatch();
   const { token } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!token) {
@@ -354,13 +361,12 @@ const MainPage = () => {
         });
       }).catch((error) => {
         console.error(error);
-        toast('Ошибка сети', { type: 'error' });
+        toast(t('networkError'), { type: 'error' });
       });
   }, [dispatch, token]);
 
   return (
     <Container className="container h-100 my-4 overflow-hidden rounded shadow">
-      <Link to={ROUTER_PATHS.LOGIN}>LOGIN</Link>
       <Row bg="white" className="h-100 flex-md-row">
         <Col lg={2}>
           <Channels />

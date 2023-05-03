@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import { useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../context/auth';
 import { ROUTER_PATHS } from '../../constants';
@@ -10,11 +11,12 @@ import validator from './validator';
 
 const SignUpPage = () => {
   const { setToken, setUsername } = useContext(AuthContext);
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
     <div>
-      <h1>Регистрация</h1>
+      <h1>{t('registration')}</h1>
       <Formik
         initialValues={{
           login: '', password: '', confirmPassword: '', error: '',
@@ -24,8 +26,8 @@ const SignUpPage = () => {
           axios.post('/api/v1/signup', { username: values.login, password: values.password })
             .then((response) => {
               if (!response?.data?.token) {
-                helpers.setFieldError('error', 'Has no token');
-                throw new Error('Has no token');
+                helpers.setFieldError('error', t('hasNoToken'));
+                throw new Error(t('hasNoToken'));
               }
 
               setToken(response.data.token);
@@ -35,17 +37,17 @@ const SignUpPage = () => {
             })
             .catch((error) => {
               if (error.response.status === 409) {
-                helpers.setFieldError('error', 'Такой пользователь уже существует');
+                helpers.setFieldError('error', t('userAlreadyExsists'));
               }
-              console.error('error', error);
-              toast('Ошибка сети', { type: 'error' });
+              console.error(error);
+              toast(t('networkError'), { type: 'error' });
             });
         }}
         // eslint-disable-next-line consistent-return
         validate={({ password, confirmPassword }) => {
           if (password !== confirmPassword) {
             return {
-              confirmPassword: 'Пароль и подтверждение должны совпадать',
+              confirmPassword: t('passwordShouldMatch'),
             };
           }
         }}
@@ -57,16 +59,15 @@ const SignUpPage = () => {
           handleChange,
           handleBlur,
           handleSubmit,
-        // eslint-disable-next-line no-sequences
-        }) => (console.log('errors', errors), (
+        }) => (
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="login">
-              <Form.Label>Имя пользователя</Form.Label>
+              <Form.Label>{t('userName')}</Form.Label>
               <Form.Control
                 onChange={handleChange}
                 onBlur={handleBlur}
                 type="text"
-                placeholder="Введите никнейм"
+                placeholder={t('enterNickname')}
                 value={values.email}
                 isInvalid={errors.login}
               />
@@ -76,12 +77,12 @@ const SignUpPage = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="password">
-              <Form.Label>Пароль</Form.Label>
+              <Form.Label>{t('password')}</Form.Label>
               <Form.Control
                 onChange={handleChange}
                 onBlur={handleBlur}
                 type="password"
-                placeholder="Введите пароль"
+                placeholder={t('enterPassword')}
                 value={values.password}
                 isInvalid={errors.password}
               />
@@ -91,12 +92,12 @@ const SignUpPage = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="confirmPassword">
-              <Form.Label>Подтверждение пароля</Form.Label>
+              <Form.Label>{t('passwordConfirmation')}</Form.Label>
               <Form.Control
                 onChange={handleChange}
                 onBlur={handleBlur}
                 type="password"
-                placeholder="Подтвердите пароль"
+                placeholder={t('confirmPassword')}
                 value={values.confirmPassword}
                 isInvalid={errors.confirmPassword}
               />
@@ -119,10 +120,10 @@ const SignUpPage = () => {
             </Form.Group>
 
             <Button variant="primary" type="submit">
-              Зарегистрироваться
+              {t('register')}
             </Button>
           </Form>
-        ))}
+        )}
       </Formik>
     </div>
   );

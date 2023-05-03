@@ -32,8 +32,8 @@ const LoginPage = () => {
               navigate(ROUTER_PATHS.MAIN_PAGE);
             })
             .catch((error) => {
-              console.error('error', error);
-              toast('Ошибка сети', { type: 'error' });
+              console.error(error);
+              toast(t('networkError'), { type: 'error' });
             });
         }}
         validationSchema={validator}
