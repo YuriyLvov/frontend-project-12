@@ -83,10 +83,16 @@ test('input fields on sign up page', async ({ page }) => {
 
   const yourNickNameLabel = page.getByLabel(i18next.t('userName'));
   const passwordLabel = page.getByLabel(i18next.t('password'), { exact: true });
-  const passwordConfirmationLabel = page.getByLabel(i18next.t('confirmPassword'), { exact: true });
+  const passwordConfirmationLabel = page.getByLabel(
+    i18next.t('confirmPassword'),
+    { exact: true },
+  );
   const enterNicknamePlaceholder = page.getByPlaceholder(i18next.t('enterNickname'));
   const enterPasswordPlaceholder = page.getByPlaceholder(i18next.t('enterPassword'));
-  const confirmPasswordPlaceholder = page.getByPlaceholder(i18next.t('confirmPassword'), { exact: true });
+  const confirmPasswordPlaceholder = page.getByPlaceholder(
+    i18next.t('confirmPassword'),
+    { exact: true },
+  );
   const registrationTitle = page.getByRole('heading', { name: i18next.t('registration') });
   const registerButton = page.getByRole('button', { name: i18next.t('register') });
 
@@ -108,16 +114,22 @@ test('registration form validation', async ({ page }) => {
 
   const enterNicknameInput = page.getByPlaceholder(i18next.t('enterNickname'));
   await enterNicknameInput.fill('12'); // less than 3
-  const usernameLengthValidationToShortError = page.getByText(i18next.t('usernameLengthValidationError'));
+  const usernameLengthValidationToShortError = page.getByText(
+    i18next.t('usernameLengthValidationError'),
+  );
   await expect(usernameLengthValidationToShortError).toBeVisible();
 
   await enterNicknameInput.fill('12345678910111213141516'); // more than 20
-  const usernameLengthValidationToLongError = page.getByText(i18next.t('usernameLengthValidationError'));
+  const usernameLengthValidationToLongError = page.getByText(
+    i18next.t('usernameLengthValidationError'),
+  );
   await expect(usernameLengthValidationToLongError).toBeVisible();
 
   const enterPasswordInput = page.getByPlaceholder(i18next.t('enterPassword'));
   await enterPasswordInput.fill('123'); // less than 6
-  const passwordLengthValidationToShortError = page.getByText(i18next.t('passwordLengthValidationError'));
+  const passwordLengthValidationToShortError = page.getByText(
+    i18next.t('passwordLengthValidationError'),
+  );
   await expect(passwordLengthValidationToShortError).toBeVisible();
 
   const confirmPasswordInput = page.getByPlaceholder(i18next.t('confirmPassword'));
