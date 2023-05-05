@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import filter from 'leo-profanity';
 import {
   Provider as RollbarProvider,
   ErrorBoundary,
@@ -18,7 +17,6 @@ import rollbarConfig from './rollbar.json';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-filter.loadDictionary('ru');
 initLocalization();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

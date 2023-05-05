@@ -51,6 +51,7 @@ const ChatMessageInput = () => {
     <Form className="mt-auto px-5 py-3" onSubmit={onSubmit}>
       <Form.Group className="mb-3 d-flex" controlId="message">
         <Form.Control
+          aria-label={t('newMessage')}
           autoComplete="off"
           disabled={disabled}
           ref={inputRef}
@@ -65,7 +66,7 @@ const ChatMessageInput = () => {
           variant="outline-secondary"
         >
           →
-          <span className="visually-hidden">{t('sendMessage')}</span>
+          <Form.Label visuallyHidden>{t('send')}</Form.Label>
         </Button>
       </Form.Group>
     </Form>

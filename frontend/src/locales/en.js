@@ -35,6 +35,9 @@ const en = {
     usernameLengthValidationError: 'From 3 to 20 letters',
     passwordLengthValidationError: 'At least 6 letters',
     sendMessage: 'Send message',
+    newMessage: 'New message',
+    nameOfChannel: 'Channel name',
+    channelControl: 'Channel control',
   },
 };
 

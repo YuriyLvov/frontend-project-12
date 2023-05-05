@@ -102,7 +102,7 @@ const SignUpPage = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="confirmPassword">
-              <Form.Label>{t('passwordConfirmation')}</Form.Label>
+              <Form.Label>{t('confirmPassword')}</Form.Label>
               <Form.Control
                 onChange={handleChange}
                 onBlur={handleBlur}

@@ -3,6 +3,7 @@ import {
   Button,
   ButtonGroup,
   Dropdown,
+  Form,
   Row,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -116,7 +117,9 @@ const Channels = () => {
               {removable ? (
                 <Dropdown as={ButtonGroup}>
                   {channelButton}
-                  <Dropdown.Toggle split variant={currentChannelId === id ? 'secondary' : null} />
+                  <Dropdown.Toggle split variant={currentChannelId === id ? 'secondary' : null}>
+                    <Form.Label visuallyHidden>{t('channelControl')}</Form.Label>
+                  </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item className="text-start w-100" onClick={() => handleShowRemoveModal(id)}>{t('delete')}</Dropdown.Item>
                     <Dropdown.Item className="text-start w-100" onClick={() => handleShowChangeModal(id)}>{t('rename')}</Dropdown.Item>

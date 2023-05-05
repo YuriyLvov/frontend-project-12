@@ -48,6 +48,7 @@ const ChannelChangeModal = ({
               onChange={onChange}
               value={channelName}
             />
+            <Form.Label visuallyHidden>{t('nameOfChannel')}</Form.Label>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>

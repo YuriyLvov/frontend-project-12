@@ -35,6 +35,9 @@ const ru = {
     usernameLengthValidationError: 'От 3 до 20 символов',
     passwordLengthValidationError: 'Не менее 6 символов',
     sendMessage: 'Отправка сообщения',
+    newMessage: 'Новое сообщение',
+    nameOfChannel: 'Имя канала',
+    channelControl: 'Управление каналом',
   },
 };
 

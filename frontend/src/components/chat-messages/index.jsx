@@ -12,7 +12,7 @@ const ChatMessages = () => {
         <div key={message.id}>
           <b>{message.username}</b>
           <span>: </span>
-          <span>{filter.clean(message.body, '*', 2)}</span>
+          <span>{filter.clean(message.body)}</span>
         </div>
       ))}
     </Col>
