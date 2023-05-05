@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useContext, useEffect } from 'react';
 import {
   Container,
@@ -8,6 +7,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { getData } from '../../api';
 import { SOCKET_EVENTS } from '../../constants';
 import { AuthContext } from '../../context/auth';
 import {
@@ -31,11 +31,7 @@ const MainPage = () => {
       return;
     }
 
-    axios.get('/api/v1/data', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    getData({ token })
       .then((response) => {
         dispatch(init(response.data));
 

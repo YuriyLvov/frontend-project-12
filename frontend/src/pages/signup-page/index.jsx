@@ -1,10 +1,10 @@
-import axios from 'axios';
 import { Formik } from 'formik';
 import { useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { signup } from '../../api';
 import { AuthContext } from '../../context/auth';
 import { ROUTER_PATHS } from '../../constants';
 import getSchema from './validator';
@@ -24,7 +24,7 @@ const SignUpPage = () => {
         }}
         onSubmit={(values, helpers) => {
           helpers.setFieldError('error', '');
-          axios.post('/api/v1/signup', { username: values.login, password: values.password })
+          signup({ username: values.login, password: values.password })
             .then((response) => {
               if (!response?.data?.token) {
                 helpers.setFieldError('error', t('hasNoToken'));

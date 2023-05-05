@@ -1,10 +1,10 @@
-import axios from 'axios';
 import { Formik } from 'formik';
 import { useContext } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { login } from '../../api';
 import { AuthContext } from '../../context/auth';
 import { ROUTER_PATHS } from '../../constants';
 import validator from './validator';
@@ -21,7 +21,7 @@ const LoginPage = () => {
         <Formik
           initialValues={{ login: '', password: '', error: '' }}
           onSubmit={(values, helpers) => {
-            axios.post('/api/v1/login', { username: values.login, password: values.password })
+            login({ username: values.login, password: values.password })
               .then((response) => {
                 if (!response?.data?.token) {
                   throw new Error(t('hasNoToken'));
