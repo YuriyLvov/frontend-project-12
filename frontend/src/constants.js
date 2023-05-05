@@ -2,7 +2,7 @@ export const ROUTER_PATHS = {
   MAIN_PAGE: '/',
   LOGIN: '/login',
   NOT_FOUND: '*',
-  SIGN_UP: '/sign-up',
+  SIGN_UP: '/signup',
 };
 
 export const SOCKET_EVENTS = {
