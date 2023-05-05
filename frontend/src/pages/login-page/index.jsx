@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -11,8 +11,15 @@ import validator from './validator';
 
 const LoginPage = () => {
   const { setToken, setUsername } = useContext(AuthContext);
+  const inputRef = useRef(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [inputRef]);
 
   return (
     <Card>
@@ -56,6 +63,7 @@ const LoginPage = () => {
                   {t('yourNickname')}
                 </Form.Label>
                 <Form.Control
+                  ref={inputRef}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   type="text"

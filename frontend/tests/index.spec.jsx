@@ -24,7 +24,7 @@ test('should open sing up page', async ({ page }) => {
 
   await expect(registerLink).toBeVisible();
   await registerLink.click();
-  await expect(page).toHaveURL(/\/sign-up/);
+  await expect(page).toHaveURL(/\/signup/);
 });
 
 test('input fields on login page', async ({ page }) => {

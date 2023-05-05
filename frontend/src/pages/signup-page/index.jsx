@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -11,9 +11,16 @@ import getSchema from './validator';
 
 const SignUpPage = () => {
   const { setToken, setUsername } = useContext(AuthContext);
+  const inputRef = useRef(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const validator = getSchema();
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [inputRef]);
 
   return (
     <div>
@@ -66,6 +73,7 @@ const SignUpPage = () => {
             <Form.Group className="mb-3" controlId="login">
               <Form.Label>{t('userName')}</Form.Label>
               <Form.Control
+                ref={inputRef}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 type="text"

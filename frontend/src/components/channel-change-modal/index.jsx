@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Button,
   Form,
@@ -15,7 +15,14 @@ const ChannelChangeModal = ({
 }) => {
   const [channelName, setChannelName] = useState(initialChannelName);
   const handleSubmit = initialChannelName ? onRenameChannel : onAddChannel;
+  const inputRef = useRef(null);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [inputRef]);
 
   const onChange = (event) => {
     setChannelName(event.target.value);
@@ -36,6 +43,7 @@ const ChannelChangeModal = ({
           <Form.Group className="mb-3" controlId="channelName">
             <Form.Control
               autoComplete="off"
+              ref={inputRef}
               type="text"
               onChange={onChange}
               value={channelName}
