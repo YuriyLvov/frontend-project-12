@@ -117,7 +117,6 @@ const Channels = () => {
                 <Dropdown as={ButtonGroup}>
                   {channelButton}
                   <Dropdown.Toggle split variant={currentChannelId === id ? 'secondary' : null} />
-
                   <Dropdown.Menu>
                     <Dropdown.Item className="text-start w-100" onClick={() => handleShowRemoveModal(id)}>{t('delete')}</Dropdown.Item>
                     <Dropdown.Item className="text-start w-100" onClick={() => handleShowChangeModal(id)}>{t('rename')}</Dropdown.Item>

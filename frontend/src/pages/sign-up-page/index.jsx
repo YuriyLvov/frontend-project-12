@@ -7,12 +7,13 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../context/auth';
 import { ROUTER_PATHS } from '../../constants';
-import validator from './validator';
+import getSchema from './validator';
 
 const SignUpPage = () => {
   const { setToken, setUsername } = useContext(AuthContext);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const validator = getSchema();
 
   return (
     <div>
@@ -38,6 +39,7 @@ const SignUpPage = () => {
             .catch((error) => {
               if (error.response.status === 409) {
                 helpers.setFieldError('error', t('userAlreadyExsists'));
+                return;
               }
               console.error(error);
               toast(t('networkError'), { type: 'error' });

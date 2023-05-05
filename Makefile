@@ -15,3 +15,6 @@ deploy:
 
 start:
 	make start-backend & make start-frontend
+
+test-e2e:
+	npm run test-e2e

@@ -11,7 +11,7 @@ const ru = {
     notFound: '404 НЕ НАЙДЕНО',
     networkError: 'Ошибка сети',
     userAlreadyExsists: 'Такой пользователь уже существует',
-    passwordShouldMatch: 'Пароль и подтверждение должны совпадать',
+    passwordShouldMatch: 'Пароли должны совпадать',
     userName: 'Имя пользователя',
     confirmPassword: 'Подтвердите пароль',
     passwordConfirmation: 'Подтверждение пароля',
@@ -30,7 +30,11 @@ const ru = {
     channels: 'Каналы',
     rename: 'Переименовать',
     messagesCount: 'сообщений',
-    enterMessage: 'Введите сообщение',
+    enterMessage: 'Введите сообщение...',
+    wrongNameOrPassword: 'Неверные имя пользователя или пароль',
+    usernameLengthValidationError: 'От 3 до 20 символов',
+    passwordLengthValidationError: 'Не менее 6 символов',
+    sendMessage: 'Отправка сообщения',
   },
 };
 

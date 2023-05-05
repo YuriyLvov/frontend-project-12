@@ -7,7 +7,7 @@
     "build": "npm run build --prefix frontend",
     "start": "start-server -s ./frontend/build",
     "postinstall": "cd frontend && npm ci",
-    "test-ct": "playwright test -c playwright-ct.config.js"
+    "test-e2e": "playwright test -c playwright-ct.config.js"
   },
   "repository": {
     "type": "git",

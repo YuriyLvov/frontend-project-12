@@ -11,7 +11,7 @@ const en = {
     notFound: '404 NOT FOUND',
     networkError: 'Network error',
     userAlreadyExsists: 'This user already exsists',
-    passwordShouldMatch: 'Password and confirmation should match',
+    passwordShouldMatch: 'Passwords should match',
     userName: 'User name',
     confirmPassword: 'Confirm password',
     passwordConfirmation: 'Password confirmation',
@@ -30,7 +30,11 @@ const en = {
     channels: 'Channels',
     rename: 'Rename',
     messagesCount: 'messages',
-    enterMessage: 'Input message',
+    enterMessage: 'Input message...',
+    wrongNameOrPassword: 'Wrong username or password',
+    usernameLengthValidationError: 'From 3 to 20 letters',
+    passwordLengthValidationError: 'At least 6 letters',
+    sendMessage: 'Send message',
   },
 };
 

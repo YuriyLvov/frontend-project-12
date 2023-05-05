@@ -19,8 +19,8 @@ const LoginPage = () => {
       <Card.Body>
         <h1>{t('enter')}</h1>
         <Formik
-          initialValues={{ login: '', password: '' }}
-          onSubmit={(values) => {
+          initialValues={{ login: '', password: '', error: '' }}
+          onSubmit={(values, helpers) => {
             axios.post('/api/v1/login', { username: values.login, password: values.password })
               .then((response) => {
                 if (!response?.data?.token) {
@@ -33,6 +33,10 @@ const LoginPage = () => {
                 navigate(ROUTER_PATHS.MAIN_PAGE);
               })
               .catch((error) => {
+                if (error.response.status === 401) {
+                  helpers.setFieldError('error', t('wrongNameOrPassword'));
+                  return;
+                }
                 console.error(error);
                 toast(t('networkError'), { type: 'error' });
               });
@@ -40,6 +44,7 @@ const LoginPage = () => {
           validationSchema={validator}
         >
           {({
+            errors,
             values,
             handleChange,
             handleBlur,
@@ -70,6 +75,19 @@ const LoginPage = () => {
                   placeholder={t('enterPassword')}
                   value={values.password}
                 />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="error">
+                <Form.Control
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.error}
+                  isInvalid={errors.error}
+                  className="d-none"
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.error}
+                </Form.Control.Feedback>
               </Form.Group>
 
               <Button variant="primary" type="submit">
