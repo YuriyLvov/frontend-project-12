@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { test, expect } from '@playwright/test';
 import i18next from 'i18next';
 import { initLocalization } from '../src/locales/index.js';
