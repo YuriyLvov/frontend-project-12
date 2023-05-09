@@ -38,6 +38,8 @@ const ru = {
     newMessage: 'Новое сообщение',
     nameOfChannel: 'Имя канала',
     channelControl: 'Управление каналом',
+    shouldBeUnique: 'Должно быть уникальным',
+    requiredField: 'Обязательное поле',
   },
 };
 

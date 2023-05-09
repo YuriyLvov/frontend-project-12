@@ -38,6 +38,8 @@ const en = {
     newMessage: 'New message',
     nameOfChannel: 'Channel name',
     channelControl: 'Channel control',
+    shouldBeUnique: 'Should be unique',
+    requiredField: 'Required field',
   },
 };
 

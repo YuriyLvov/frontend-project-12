@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { Container, Row } from 'react-bootstrap';
 import {
   selectCurrentChannelName,
   selectMessagesCount,
@@ -11,10 +12,12 @@ const ChatHeader = () => {
   const { t } = useTranslation();
 
   return (
-    <div>
-      <b>{`# ${currentChannelName}`}</b>
-      <p>{`${messagesCount} ${t('messagesCount')}`}</p>
-    </div>
+    <Container>
+      <Row>
+        <b>{`# ${currentChannelName}`}</b>
+        <p>{`${messagesCount} ${t('messagesCount')}`}</p>
+      </Row>
+    </Container>
   );
 };
 

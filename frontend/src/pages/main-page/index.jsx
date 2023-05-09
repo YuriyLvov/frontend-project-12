@@ -1,6 +1,5 @@
 import { useContext, useEffect } from 'react';
 import {
-  Container,
   Col,
   Row,
 } from 'react-bootstrap';
@@ -57,16 +56,14 @@ const MainPage = () => {
   }, [dispatch, token, t]);
 
   return (
-    <Container className="h-100 shadow rounded overflow-hidden">
-      <Row bg="white" className="h-100 flex-md-row">
-        <Col lg={2}>
-          <Channels />
-        </Col>
-        <Col className="p-0 h-100">
-          <Chat />
-        </Col>
-      </Row>
-    </Container>
+    <Row bg="white" className="h-100 flex-md-row border rounded">
+      <Col className="px-0 bg-light flex-column h-100 d-flex" lg={2}>
+        <Channels />
+      </Col>
+      <Col className="p-0 h-100">
+        <Chat />
+      </Col>
+    </Row>
   );
 };
 

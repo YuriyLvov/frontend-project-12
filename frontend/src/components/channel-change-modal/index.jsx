@@ -7,6 +7,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 const ChannelChangeModal = ({
+  error,
   onAddChannel,
   onRenameChannel,
   show,
@@ -50,8 +51,20 @@ const ChannelChangeModal = ({
             />
             <Form.Label visuallyHidden>{t('nameOfChannel')}</Form.Label>
           </Form.Group>
+
+          <Form.Group controlId="error">
+            <Form.Control
+              autoComplete="off"
+              className="d-none"
+              type="text"
+              isInvalid={error}
+            />
+            <Form.Control.Feedback type="invalid">
+              {error}
+            </Form.Control.Feedback>
+          </Form.Group>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="justify-content-between">
           <Button variant="secondary" onClick={handleClose}>
             {t('cancel')}
           </Button>

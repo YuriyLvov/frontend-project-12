@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { GENERAL_CHANNEL_ID } from '../../constants';
 import { emitNewChannel, emitRenameChannel } from '../../socket';
 
 export const selectChannels = (state) => state.chats.channels;
@@ -98,6 +99,10 @@ export const counterSlice = createSlice({
     },
     removeChannel: (state, action) => {
       state.channels = state.channels.filter(({ id }) => id !== action.payload.id);
+
+      if (state.currentChannelId === action.payload.id) {
+        state.currentChannelId = GENERAL_CHANNEL_ID;
+      }
     },
     renameChannel: (state, action) => {
       state.channels = state.channels.map((channel) => {

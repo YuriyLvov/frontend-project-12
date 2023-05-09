@@ -11,3 +11,5 @@ export const SOCKET_EVENTS = {
   REMOVE_CHANNEL: 'removeChannel',
   RENAME_CHANNEL: 'renameChannel',
 };
+
+export const GENERAL_CHANNEL_ID = 1;

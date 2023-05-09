@@ -5,10 +5,10 @@ const getSchema = () => yup.object().shape({
   login: yup.string()
     .min(3, i18next.t('usernameLengthValidationError'))
     .max(20, i18next.t('usernameLengthValidationError'))
-    .required(),
+    .required(i18next.t('requiredField')),
   password: yup.string()
     .min(6, i18next.t('passwordLengthValidationError'))
-    .required(),
+    .required(i18next.t('requiredField')),
 });
 
 export default getSchema;

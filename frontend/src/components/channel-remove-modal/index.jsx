@@ -24,7 +24,7 @@ const ChannelRemoveModal = ({
       <Modal.Body>
         {t('areYouSure')}
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className="justify-content-between">
         <Button variant="secondary" onClick={handleClose}>
           {t('cancel')}
         </Button>

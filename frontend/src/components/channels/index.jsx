@@ -4,7 +4,7 @@ import {
   ButtonGroup,
   Dropdown,
   Form,
-  Row,
+  Nav,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -27,11 +27,31 @@ const Channels = () => {
   const currentChannelId = useSelector(selectCurrentChannelId);
   const { t } = useTranslation();
 
+  const [error, setError] = useState('');
   const [channelNameForRename, setChannelNameForRename] = useState('');
   const [channelIdToRename, setChannelIdToRename] = useState(null);
   const [channelIdToRemove, setChannelIdToRemove] = useState(null);
   const [showChangeModal, setShowChangeModal] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
+
+  const checkChannelName = (channelName) => {
+    if (!channelName) {
+      setError(t('requiredField'));
+      return false;
+    }
+
+    const channelExists = Boolean(
+      channels.find((channel) => channel.name === channelName),
+    );
+
+    if (channelExists) {
+      setError(t('shouldBeUnique'));
+      return false;
+    }
+
+    setError('');
+    return true;
+  };
 
   const handleCloseChangeModal = () => {
     setShowChangeModal(false);
@@ -49,7 +69,9 @@ const Channels = () => {
   };
 
   const onAddChannel = (channelName) => {
-    if (!channelName) {
+    const channelNameIsValid = checkChannelName(channelName);
+
+    if (!channelNameIsValid) {
       return;
     }
 
@@ -59,11 +81,9 @@ const Channels = () => {
   };
 
   const onRenameChannel = (channelName) => {
-    const channelExists = Boolean(
-      channels.find((channel) => channel.name === channelName),
-    );
+    const channelNameIsValid = checkChannelName(channelName);
 
-    if (!channelName || channelExists) {
+    if (!channelNameIsValid) {
       return;
     }
 
@@ -93,47 +113,48 @@ const Channels = () => {
   };
 
   return (
-    <div>
-      <Row>
-        <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-          <b>{`${t('channels')}:`}</b>
-          <Button onClick={() => handleShowChangeModal()} variant="outline-primary">+</Button>
-        </div>
-      </Row>
-      {
-        Array.isArray(channels) && channels.map(({ name, id, removable }) => {
-          const channelButton = (
-            <Button
-              className="text-start w-100"
-              onClick={() => onChannelChange(id)}
-              variant={currentChannelId === id ? 'secondary' : null}
-            >
-              {`# ${name}`}
-            </Button>
-          );
+    <>
+      <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
+        <b>{`${t('channels')}:`}</b>
+        <Button onClick={() => handleShowChangeModal()} variant="outline-primary">+</Button>
+      </div>
+      <Nav className="px-2 mb-3 overflow-auto h-100 d-block">
+        {
+          Array.isArray(channels) && channels.map(({ name, id, removable }) => {
+            const channelButton = (
+              <Button
+                className="text-start w-100 text-truncate"
+                onClick={() => onChannelChange(id)}
+                variant={currentChannelId === id ? 'secondary' : null}
+              >
+                {`# ${name}`}
+              </Button>
+            );
 
-          return (
-            <Row key={name}>
-              {removable ? (
-                <Dropdown as={ButtonGroup}>
-                  {channelButton}
-                  <Dropdown.Toggle split variant={currentChannelId === id ? 'secondary' : null}>
-                    <Form.Label visuallyHidden>{t('channelControl')}</Form.Label>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item className="text-start w-100" onClick={() => handleShowRemoveModal(id)}>{t('delete')}</Dropdown.Item>
-                    <Dropdown.Item className="text-start w-100" onClick={() => handleShowChangeModal(id)}>{t('rename')}</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              ) : (
-                channelButton
-              )}
-            </Row>
-          );
-        })
-      }
+            return (
+              <Nav.Item key={name} className="w-100">
+                {removable ? (
+                  <Dropdown as={ButtonGroup} className="w-100">
+                    {channelButton}
+                    <Dropdown.Toggle split variant={currentChannelId === id ? 'secondary' : null}>
+                      <Form.Label visuallyHidden>{t('channelControl')}</Form.Label>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item className="text-start w-100" onClick={() => handleShowRemoveModal(id)}>{t('delete')}</Dropdown.Item>
+                      <Dropdown.Item className="text-start w-100" onClick={() => handleShowChangeModal(id)}>{t('rename')}</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                ) : (
+                  channelButton
+                )}
+              </Nav.Item>
+            );
+          })
+        }
+      </Nav>
       {showChangeModal && (
         <ChannelChangeModal
+          error={error}
           onAddChannel={onAddChannel}
           onRenameChannel={onRenameChannel}
           show={showChangeModal}
@@ -148,7 +169,7 @@ const Channels = () => {
           handleRemove={handleRemove}
         />
       )}
-    </div>
+    </>
   );
 };
 
