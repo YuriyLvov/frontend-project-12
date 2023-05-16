@@ -27,31 +27,11 @@ const Channels = () => {
   const currentChannelId = useSelector(selectCurrentChannelId);
   const { t } = useTranslation();
 
-  const [error, setError] = useState('');
   const [channelNameForRename, setChannelNameForRename] = useState('');
   const [channelIdToRename, setChannelIdToRename] = useState(null);
   const [channelIdToRemove, setChannelIdToRemove] = useState(null);
   const [showChangeModal, setShowChangeModal] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
-
-  const checkChannelName = (channelName) => {
-    if (!channelName) {
-      setError(t('requiredField'));
-      return false;
-    }
-
-    const channelExists = Boolean(
-      channels.find((channel) => channel.name === channelName),
-    );
-
-    if (channelExists) {
-      setError(t('shouldBeUnique'));
-      return false;
-    }
-
-    setError('');
-    return true;
-  };
 
   const handleCloseChangeModal = () => {
     setShowChangeModal(false);
@@ -69,24 +49,12 @@ const Channels = () => {
   };
 
   const onAddChannel = (channelName) => {
-    const channelNameIsValid = checkChannelName(channelName);
-
-    if (!channelNameIsValid) {
-      return;
-    }
-
     dispatch(createChannelAction(channelName));
     handleCloseChangeModal();
     toast(t('channelCreated'), { type: 'success' });
   };
 
   const onRenameChannel = (channelName) => {
-    const channelNameIsValid = checkChannelName(channelName);
-
-    if (!channelNameIsValid) {
-      return;
-    }
-
     dispatch(renameChannelAction({ id: channelIdToRename, name: channelName }));
     handleCloseChangeModal();
     toast(t('channelRenamed'), { type: 'success' });
@@ -154,12 +122,12 @@ const Channels = () => {
       </Nav>
       {showChangeModal && (
         <ChannelChangeModal
-          error={error}
           onAddChannel={onAddChannel}
           onRenameChannel={onRenameChannel}
           show={showChangeModal}
           handleClose={handleCloseChangeModal}
           initialChannelName={channelNameForRename}
+          channelNames={channels.map(({ name }) => name)}
         />
       )}
       {showRemoveModal && (

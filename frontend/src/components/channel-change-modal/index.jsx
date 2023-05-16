@@ -1,23 +1,25 @@
-import { useState, useEffect, useRef } from 'react';
+import { Formik } from 'formik';
+import { useEffect, useRef } from 'react';
 import {
   Button,
   Form,
   Modal,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import getSchema from './validator';
 
 const ChannelChangeModal = ({
-  error,
   onAddChannel,
   onRenameChannel,
   show,
   handleClose,
   initialChannelName,
+  channelNames,
 }) => {
-  const [channelName, setChannelName] = useState(initialChannelName);
-  const handleSubmit = initialChannelName ? onRenameChannel : onAddChannel;
+  const onSubmit = initialChannelName ? onRenameChannel : onAddChannel;
   const inputRef = useRef(null);
   const { t } = useTranslation();
+  const validator = getSchema(channelNames);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -25,54 +27,57 @@ const ChannelChangeModal = ({
     }
   }, [inputRef]);
 
-  const onChange = (event) => {
-    setChannelName(event.target.value);
-  };
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    handleSubmit(channelName);
-  };
-
   return (
     <Modal show={show} onHide={handleClose}>
-      <Form className="mt-auto px-5 py-3" onSubmit={onSubmit}>
-        <Modal.Header closeButton>
-          <Modal.Title>{initialChannelName ? t('renameChannel') : t('addChannel')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group className="mb-3" controlId="channelName">
-            <Form.Control
-              autoComplete="off"
-              ref={inputRef}
-              type="text"
-              onChange={onChange}
-              value={channelName}
-            />
-            <Form.Label visuallyHidden>{t('nameOfChannel')}</Form.Label>
-          </Form.Group>
+      <Formik
+        initialValues={{
+          channelName: initialChannelName || '', error: '',
+        }}
+        onSubmit={(value) => {
+          onSubmit(value.channelName);
+        }}
+        validationSchema={validator}
+      >
+        {({
+          errors,
+          values,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => (
+          <Form className="mt-auto px-5 py-3" onSubmit={handleSubmit}>
+            <Modal.Header closeButton>
+              <Modal.Title>{initialChannelName ? t('renameChannel') : t('addChannel')}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form.Group className="mb-3" controlId="channelName">
+                <Form.Control
+                  autoComplete="off"
+                  ref={inputRef}
+                  type="text"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.channelName}
+                  isInvalid={errors.channelName}
+                />
+                <Form.Label visuallyHidden>{t('nameOfChannel')}</Form.Label>
+                <Form.Control.Feedback type="invalid">
+                  {errors.channelName}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer className="justify-content-between">
+              <Button variant="secondary" onClick={handleClose}>
+                {t('cancel')}
+              </Button>
+              <Button type="submit" variant="primary">
+                {t('send')}
+              </Button>
+            </Modal.Footer>
+          </Form>
+        )}
+      </Formik>
 
-          <Form.Group controlId="error">
-            <Form.Control
-              autoComplete="off"
-              className="d-none"
-              type="text"
-              isInvalid={error}
-            />
-            <Form.Control.Feedback type="invalid">
-              {error}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer className="justify-content-between">
-          <Button variant="secondary" onClick={handleClose}>
-            {t('cancel')}
-          </Button>
-          <Button type="submit" variant="primary">
-            {t('send')}
-          </Button>
-        </Modal.Footer>
-      </Form>
     </Modal>
   );
 };

@@ -33,6 +33,7 @@ const ru = {
     enterMessage: 'Введите сообщение...',
     wrongNameOrPassword: 'Неверные имя пользователя или пароль',
     usernameLengthValidationError: 'От 3 до 20 символов',
+    channelNameLengthValidationError: 'От 3 до 20 символов',
     passwordLengthValidationError: 'Не менее 6 символов',
     sendMessage: 'Отправка сообщения',
     newMessage: 'Новое сообщение',
