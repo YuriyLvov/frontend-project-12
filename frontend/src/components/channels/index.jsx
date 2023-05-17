@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -7,9 +7,8 @@ import {
   Nav,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-
+import { LocalesContext } from '../../context/locales';
 import { emitRemoveChannel } from '../../socket';
 import {
   changeActiveChannel,
@@ -25,7 +24,7 @@ const Channels = () => {
   const dispatch = useDispatch();
   const channels = useSelector(selectChannels);
   const currentChannelId = useSelector(selectCurrentChannelId);
-  const { t } = useTranslation();
+  const { t } = useContext(LocalesContext);
 
   const [channelNameForRename, setChannelNameForRename] = useState('');
   const [channelIdToRename, setChannelIdToRename] = useState(null);

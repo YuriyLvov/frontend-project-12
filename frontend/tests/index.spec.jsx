@@ -1,10 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { test, expect } from '@playwright/test';
-import i18next from 'i18next';
-import { initLocalization } from '../src/locales/index.js';
+import initLocales from '../src/context/locales/initLocales.js';
 
-test.beforeAll(() => {
-  initLocalization();
+// eslint-disable-next-line functional/no-let
+let i18next = null;
+
+test.beforeAll(async () => {
+  i18next = await initLocales();
 });
 
 test.beforeEach(async ({ page }) => {

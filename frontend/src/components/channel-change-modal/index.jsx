@@ -1,11 +1,11 @@
 import { Formik } from 'formik';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import {
   Button,
   Form,
   Modal,
 } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { LocalesContext } from '../../context/locales';
 import getSchema from './validator';
 
 const ChannelChangeModal = ({
@@ -18,8 +18,8 @@ const ChannelChangeModal = ({
 }) => {
   const onSubmit = initialChannelName ? onRenameChannel : onAddChannel;
   const inputRef = useRef(null);
-  const { t } = useTranslation();
-  const validator = getSchema(channelNames);
+  const { t } = useContext(LocalesContext);
+  const validator = getSchema(t, channelNames);
 
   useEffect(() => {
     if (inputRef.current) {

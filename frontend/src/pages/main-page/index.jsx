@@ -4,11 +4,11 @@ import {
   Row,
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { getData } from '../../api';
 import { SOCKET_EVENTS } from '../../constants';
 import { AuthContext } from '../../context/auth';
+import { LocalesContext } from '../../context/locales';
 import {
   addChannel,
   addMessage,
@@ -23,7 +23,7 @@ import Chat from '../../components/chat';
 const MainPage = () => {
   const dispatch = useDispatch();
   const { token } = useContext(AuthContext);
-  const { t } = useTranslation();
+  const { t } = useContext(LocalesContext);
 
   useEffect(() => {
     if (!token) {

@@ -6,8 +6,8 @@ import {
 } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../context/auth';
+import { LocalesContext } from '../../context/locales';
 import { selectCurrentChannelId } from '../../features/chats';
 import { emitNewMessage } from '../../socket';
 
@@ -17,7 +17,7 @@ const ChatMessageInput = () => {
   const [message, setMessage] = useState('');
   const channelId = useSelector(selectCurrentChannelId);
   const inputRef = useRef(null);
-  const { t } = useTranslation();
+  const { t } = useContext(LocalesContext);
 
   useEffect(() => {
     if (inputRef.current) {

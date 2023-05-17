@@ -7,17 +7,15 @@ import {
   Provider as RollbarProvider,
   ErrorBoundary,
 } from '@rollbar/react';
-import { initLocalization } from './locales';
 import store from './store';
 import { AuthContextProvider } from './context/auth';
-import './index.css';
+import { LocalesContextProvider } from './context/locales';
 import reportWebVitals from './reportWebVitals';
 import router from './router';
 import rollbarConfig from './rollbar.json';
+import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-initLocalization();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -26,10 +24,12 @@ root.render(
     <ErrorBoundary>
       <React.StrictMode>
         <Provider store={store}>
-          <AuthContextProvider>
-            <RouterProvider router={router} />
-            <ToastContainer />
-          </AuthContextProvider>
+          <LocalesContextProvider>
+            <AuthContextProvider>
+              <RouterProvider router={router} />
+              <ToastContainer />
+            </AuthContextProvider>
+          </LocalesContextProvider>
         </Provider>
       </React.StrictMode>
     </ErrorBoundary>

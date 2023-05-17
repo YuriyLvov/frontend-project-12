@@ -1,15 +1,16 @@
+import { useContext } from 'react';
 import {
   Button,
   Modal,
 } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { LocalesContext } from '../../context/locales';
 
 const ChannelRemoveModal = ({
   show,
   handleClose,
   handleRemove,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useContext(LocalesContext);
 
   const onClick = (event) => {
     event.preventDefault();

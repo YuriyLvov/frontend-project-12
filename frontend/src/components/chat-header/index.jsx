@@ -1,6 +1,7 @@
+import { useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { Container, Row } from 'react-bootstrap';
+import { LocalesContext } from '../../context/locales';
 import {
   selectCurrentChannelName,
   selectMessagesCount,
@@ -9,7 +10,7 @@ import {
 const ChatHeader = () => {
   const currentChannelName = useSelector(selectCurrentChannelName);
   const messagesCount = useSelector(selectMessagesCount);
-  const { t } = useTranslation();
+  const { t } = useContext(LocalesContext);
 
   return (
     <Container>

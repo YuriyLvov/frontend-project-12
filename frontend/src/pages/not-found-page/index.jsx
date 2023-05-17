@@ -1,7 +1,8 @@
-import { useTranslation } from 'react-i18next';
+import { useContext } from 'react';
+import { LocalesContext } from '../../context/locales';
 
 const NotFoundPage = () => {
-  const { t } = useTranslation();
+  const { t } = useContext(LocalesContext);
 
   return <div>{t('notFound')}</div>;
 };

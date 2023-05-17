@@ -7,18 +7,19 @@ import {
   Form,
 } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { login } from '../../api';
 import { AuthContext } from '../../context/auth';
+import { LocalesContext } from '../../context/locales';
 import { ROUTER_PATHS } from '../../constants';
-import validator from './validator';
+import getSchema from './validator';
 
 const LoginPage = () => {
   const { setToken, setUsername } = useContext(AuthContext);
   const inputRef = useRef(null);
-  const { t } = useTranslation();
+  const { t } = useContext(LocalesContext);
   const navigate = useNavigate();
+  const validator = getSchema(t);
 
   useEffect(() => {
     if (inputRef.current) {
