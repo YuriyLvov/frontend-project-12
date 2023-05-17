@@ -22,7 +22,7 @@ initLocalization();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <RollbarProvider config={rollbarConfig}>
+  <RollbarProvider config={{ ...rollbarConfig, accessToken: process.env.REACT_APP_ROLLBAR_TOKEN }}>
     <ErrorBoundary>
       <React.StrictMode>
         <Provider store={store}>
