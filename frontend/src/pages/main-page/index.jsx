@@ -5,7 +5,9 @@ import {
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import { getData } from '../../api';
+import { ROUTER_PATHS } from '../../constants';
 import { AuthContext } from '../../context/auth';
 import { LocalesContext } from '../../context/locales';
 import { init } from '../../features/chats';
@@ -14,8 +16,9 @@ import Chat from '../../components/chat';
 
 const MainPage = () => {
   const dispatch = useDispatch();
-  const { token } = useContext(AuthContext);
+  const { logOut, token } = useContext(AuthContext);
   const { t } = useContext(LocalesContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) {
@@ -28,6 +31,8 @@ const MainPage = () => {
       }).catch((error) => {
         console.error(error);
         toast(t('networkError'), { type: 'error' });
+        logOut();
+        navigate(ROUTER_PATHS.LOGIN);
       });
   }, [dispatch, token, t]);
 
