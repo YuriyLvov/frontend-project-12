@@ -6,17 +6,9 @@ import {
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getData } from '../../api';
-import { SOCKET_EVENTS } from '../../constants';
 import { AuthContext } from '../../context/auth';
 import { LocalesContext } from '../../context/locales';
-import {
-  addChannel,
-  addMessage,
-  init,
-  removeChannel,
-  renameChannel,
-} from '../../features/chats';
-import { socket } from '../../socket';
+import { init } from '../../features/chats';
 import Channels from '../../components/channels';
 import Chat from '../../components/chat';
 
@@ -33,22 +25,6 @@ const MainPage = () => {
     getData({ token })
       .then((response) => {
         dispatch(init(response.data));
-
-        socket.on(SOCKET_EVENTS.NEW_MESSAGE, (payload) => {
-          dispatch(addMessage(payload));
-        });
-
-        socket.on(SOCKET_EVENTS.NEW_CHANNEL, (payload) => {
-          dispatch(addChannel(payload));
-        });
-
-        socket.on(SOCKET_EVENTS.REMOVE_CHANNEL, (payload) => {
-          dispatch(removeChannel(payload));
-        });
-
-        socket.on(SOCKET_EVENTS.RENAME_CHANNEL, (payload) => {
-          dispatch(renameChannel(payload));
-        });
       }).catch((error) => {
         console.error(error);
         toast(t('networkError'), { type: 'error' });

@@ -1,4 +1,9 @@
-import { useContext, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   Button,
   ButtonGroup,
@@ -8,12 +13,16 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { SOCKET_EVENTS } from '../../constants';
 import { LocalesContext } from '../../context/locales';
-import { emitRemoveChannel } from '../../socket';
+import { emitRemoveChannel, socket } from '../../socket';
 import {
+  addChannel,
   changeActiveChannel,
   createChannelAction,
   renameChannelAction,
+  removeChannel,
+  renameChannel,
   selectChannels,
   selectCurrentChannelId,
 } from '../../features/chats';
@@ -24,6 +33,7 @@ const Channels = () => {
   const dispatch = useDispatch();
   const channels = useSelector(selectChannels);
   const currentChannelId = useSelector(selectCurrentChannelId);
+  const chatScrollRef = useRef(null);
   const { t } = useContext(LocalesContext);
 
   const [channelNameForRename, setChannelNameForRename] = useState('');
@@ -45,6 +55,12 @@ const Channels = () => {
     }
     setChannelIdToRename(id);
     setShowChangeModal(true);
+  };
+
+  const onChannelAdded = () => {
+    if (chatScrollRef.current) {
+      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
+    }
   };
 
   const onAddChannel = (channelName) => {
@@ -79,13 +95,30 @@ const Channels = () => {
     toast(t('channelDeleted'), { type: 'success' });
   };
 
+  useEffect(() => {
+    socket.on(SOCKET_EVENTS.NEW_CHANNEL, (payload) => {
+      dispatch(addChannel(payload));
+      setTimeout(() => {
+        onChannelAdded();
+      });
+    });
+
+    socket.on(SOCKET_EVENTS.REMOVE_CHANNEL, (payload) => {
+      dispatch(removeChannel(payload));
+    });
+
+    socket.on(SOCKET_EVENTS.RENAME_CHANNEL, (payload) => {
+      dispatch(renameChannel(payload));
+    });
+  }, []);
+
   return (
     <>
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
         <b>{`${t('channels')}:`}</b>
         <Button onClick={() => handleShowChangeModal()} variant="outline-primary">+</Button>
       </div>
-      <Nav className="px-2 mb-3 overflow-auto h-100 d-block">
+      <Nav className="px-2 mb-3 overflow-auto h-100 d-block" ref={chatScrollRef}>
         {
           Array.isArray(channels) && channels.map(({ name, id, removable }) => {
             const channelButton = (
