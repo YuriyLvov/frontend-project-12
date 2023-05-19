@@ -45,7 +45,7 @@ const useProvideAuth = () => {
   }), [authData, authActions]);
 
   return auth;
-}
+};
 
 export const AuthContextProvider = ({ children }) => {
   const auth = useProvideAuth();
@@ -57,6 +57,4 @@ export const AuthContextProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);

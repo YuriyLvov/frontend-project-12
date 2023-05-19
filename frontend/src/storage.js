@@ -1,6 +1,6 @@
 class Storage {
   constructor(storage) {
-    this.storage = storage
+    this.storage = storage;
   }
 
   get(key) {
@@ -20,7 +20,7 @@ class Storage {
     }
 
     try {
-      this.storage.setItem(key, JSON.stringify(value));
+      this.storage.setItem(key, value);
       return true;
     } catch (error) {
       console.error(error);
