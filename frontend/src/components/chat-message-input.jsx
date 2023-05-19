@@ -6,13 +6,13 @@ import {
 } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { AuthContext } from '../context/auth';
+import { useAuth } from '../context/auth';
 import { LocalesContext } from '../context/locales';
 import { selectCurrentChannelId } from '../features/chats';
 import { emitNewMessage } from '../socket';
 
 const ChatMessageInput = () => {
-  const { username } = useContext(AuthContext);
+  const { username } = useAuth();
   const [disabled, setDisabled] = useState(false);
   const [message, setMessage] = useState('');
   const channelId = useSelector(selectCurrentChannelId);

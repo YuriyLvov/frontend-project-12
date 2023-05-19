@@ -6,6 +6,7 @@ import MainPage from './pages/main-page';
 import NotFoundPage from './pages/not-found-page';
 import SignUpPage from './pages/signup-page';
 import { ROUTER_PATHS } from './constants';
+import { storage } from './storage';
 
 const router = createBrowserRouter([{
   element: <Layout />,
@@ -14,7 +15,7 @@ const router = createBrowserRouter([{
       path: ROUTER_PATHS.MAIN_PAGE,
       element: <MainPage />,
       loader: () => {
-        const { token } = localStorage;
+        const token = storage.get('token');
 
         if (!token) {
           throw redirect(ROUTER_PATHS.LOGIN);

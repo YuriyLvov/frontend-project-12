@@ -9,13 +9,13 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { signup } from '../api';
-import { AuthContext } from '../context/auth';
+import { useAuth } from '../context/auth';
 import { LocalesContext } from '../context/locales';
 import { ROUTER_PATHS } from '../constants';
 import getSchema from './signup-page-validator';
 
 const SignUpPage = () => {
-  const { setToken, setUsername } = useContext(AuthContext);
+  const { setToken, setUsername } = useAuth();
   const inputRef = useRef(null);
   const { t } = useContext(LocalesContext);
   const navigate = useNavigate();

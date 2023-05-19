@@ -1,23 +1,25 @@
 import {
   createContext,
   useCallback,
+  useContext,
   useMemo,
   useState,
 } from 'react';
+import { storage } from '../storage';
 
 export const AuthContext = createContext();
 
-export const AuthContextProvider = ({ children }) => {
-  const [token, setTokenLocalState] = useState(localStorage.token || null);
-  const [username, setUserNameLocalState] = useState(localStorage.username || null);
+const useProvideAuth = () => {
+  const [token, setTokenLocalState] = useState(storage.get('token') || null);
+  const [username, setUserNameLocalState] = useState(storage.get('username') || null);
 
   const setToken = useCallback((newToken) => {
-    localStorage.setItem('token', newToken);
+    storage.set('token', newToken);
     setTokenLocalState(newToken);
   }, [setTokenLocalState]);
 
   const setUsername = useCallback((newUsername) => {
-    localStorage.setItem('username', newUsername);
+    storage.set('username', newUsername);
     setUserNameLocalState(newUsername);
   }, [setUserNameLocalState]);
 
@@ -37,14 +39,24 @@ export const AuthContextProvider = ({ children }) => {
     setUsername,
   }), [setToken, setUsername, logOut]);
 
-  const authContextValues = useMemo(() => ({
+  const auth = useMemo(() => ({
     ...authData,
     ...authActions,
   }), [authData, authActions]);
 
+  return auth;
+}
+
+export const AuthContextProvider = ({ children }) => {
+  const auth = useProvideAuth();
+
   return (
-    <AuthContext.Provider value={authContextValues}>
+    <AuthContext.Provider value={auth}>
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
 };

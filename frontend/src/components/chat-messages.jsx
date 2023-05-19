@@ -1,13 +1,12 @@
-import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { Alert, Col } from 'react-bootstrap';
 import filter from 'leo-profanity';
 import cn from 'classnames';
 import { selectMessages } from '../features/chats';
-import { AuthContext } from '../context/auth';
+import { useAuth } from '../context/auth';
 
 const ChatMessages = () => {
-  const { username } = useContext(AuthContext);
+  const { username } = useAuth();
   const messages = useSelector(selectMessages);
 
   return (

@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { Container, Button, Navbar } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/auth';
+import { useAuth } from '../context/auth';
 import { LocalesContext } from '../context/locales';
 import { ROUTER_PATHS } from '../constants';
 
 const Header = () => {
-  const { logOut, token } = useContext(AuthContext);
+  const { logOut, token } = useAuth();
   const { t } = useContext(LocalesContext);
   const navigate = useNavigate();
 
