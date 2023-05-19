@@ -34,7 +34,7 @@ const MainPage = () => {
         logOut();
         navigate(ROUTER_PATHS.LOGIN);
       });
-  }, [dispatch, token, t]);
+  }, [dispatch, token, t, logOut, navigate]);
 
   return (
     <Row bg="white" className="h-100 flex-md-row border rounded">
