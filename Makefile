@@ -20,4 +20,4 @@ test-e2e:
 	npm run test-e2e
 
 lint:
-	npx eslint .
+	make -C frontend lint
