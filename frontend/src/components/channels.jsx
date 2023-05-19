@@ -22,7 +22,7 @@ import {
   renameChannel,
   selectChannels,
   selectCurrentChannelId,
-} from '../features/chats';
+} from '../slices';
 import ChannelChangeModal from './channel-change-modal';
 import ChannelRemoveModal from './channel-remove-modal';
 

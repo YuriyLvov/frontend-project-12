@@ -5,7 +5,7 @@ import { LocalesContext } from '../context/locales';
 import {
   selectCurrentChannelName,
   selectMessagesCount,
-} from '../features/chats';
+} from '../slices';
 
 const ChatHeader = () => {
   const currentChannelName = useSelector(selectCurrentChannelName);

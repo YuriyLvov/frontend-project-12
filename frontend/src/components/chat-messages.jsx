@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { Alert, Col } from 'react-bootstrap';
 import filter from 'leo-profanity';
 import cn from 'classnames';
-import { selectMessages } from '../features/chats';
+import { selectMessages } from '../slices';
 import { useAuth } from '../context/auth';
 
 const ChatMessages = () => {

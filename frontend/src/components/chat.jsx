@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Col } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { addMessage } from '../features/chats';
+import { addMessage } from '../slices';
 import { useWebSocket } from '../api';
 import ChatHeader from './chat-header';
 import ChatMessages from './chat-messages';

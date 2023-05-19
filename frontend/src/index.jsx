@@ -7,7 +7,7 @@ import {
   Provider as RollbarProvider,
   ErrorBoundary,
 } from '@rollbar/react';
-import store from './store';
+import store from './slices';
 import { AuthContextProvider } from './context/auth';
 import { LocalesContextProvider } from './context/locales';
 import reportWebVitals from './reportWebVitals';

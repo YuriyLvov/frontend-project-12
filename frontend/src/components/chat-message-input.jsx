@@ -8,7 +8,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../context/auth';
 import { LocalesContext } from '../context/locales';
-import { selectCurrentChannelId } from '../features/chats';
+import { selectCurrentChannelId } from '../slices';
 import { useWebSocket } from '../api';
 
 const ChatMessageInput = () => {

@@ -10,7 +10,7 @@ import { getData } from '../api';
 import { ROUTER_PATHS } from '../constants';
 import { useAuth } from '../context/auth';
 import { LocalesContext } from '../context/locales';
-import { init } from '../features/chats';
+import { init } from '../slices';
 import Channels from '../components/channels';
 import Chat from '../components/chat';
 
