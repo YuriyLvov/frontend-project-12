@@ -13,14 +13,11 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { SOCKET_EVENTS } from '../constants';
 import { LocalesContext } from '../context/locales';
-import { emitRemoveChannel, socket } from '../socket';
+import { useWebSocket } from '../api';
 import {
   addChannel,
   changeActiveChannel,
-  createChannelAction,
-  renameChannelAction,
   removeChannel,
   renameChannel,
   selectChannels,
@@ -35,6 +32,14 @@ const Channels = () => {
   const currentChannelId = useSelector(selectCurrentChannelId);
   const chatScrollRef = useRef(null);
   const { t } = useContext(LocalesContext);
+  const {
+    emitNewChannel,
+    emitRemoveChannel,
+    emitRenameChannel,
+    subscribeOnNewChannel,
+    subscribeOnRemoveChannel,
+    subscribeOnRenameChannel,
+  } = useWebSocket();
 
   const [channelNameForRename, setChannelNameForRename] = useState('');
   const [channelIdToRename, setChannelIdToRename] = useState(null);
@@ -64,15 +69,17 @@ const Channels = () => {
   };
 
   const onAddChannel = (channelName) => {
-    dispatch(createChannelAction(channelName));
-    handleCloseChangeModal();
-    toast(t('channelCreated'), { type: 'success' });
+    emitNewChannel(channelName).then(() => {
+      handleCloseChangeModal();
+      toast(t('channelCreated'), { type: 'success' });
+    });
   };
 
   const onRenameChannel = (channelName) => {
-    dispatch(renameChannelAction({ id: channelIdToRename, name: channelName }));
-    handleCloseChangeModal();
-    toast(t('channelRenamed'), { type: 'success' });
+    emitRenameChannel(channelIdToRename, channelName).then(() => {
+      handleCloseChangeModal();
+      toast(t('channelRenamed'), { type: 'success' });
+    });
   };
 
   const onChannelChange = (id) => {
@@ -96,18 +103,18 @@ const Channels = () => {
   };
 
   useEffect(() => {
-    socket.on(SOCKET_EVENTS.NEW_CHANNEL, (payload) => {
+    subscribeOnNewChannel((payload) => {
       dispatch(addChannel(payload));
       setTimeout(() => {
         onChannelAdded();
       });
     });
 
-    socket.on(SOCKET_EVENTS.REMOVE_CHANNEL, (payload) => {
+    subscribeOnRemoveChannel((payload) => {
       dispatch(removeChannel(payload));
     });
 
-    socket.on(SOCKET_EVENTS.RENAME_CHANNEL, (payload) => {
+    subscribeOnRenameChannel((payload) => {
       dispatch(renameChannel(payload));
     });
   }, []);

@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { useAuth } from '../context/auth';
 import { LocalesContext } from '../context/locales';
 import { selectCurrentChannelId } from '../features/chats';
-import { emitNewMessage } from '../socket';
+import { useWebSocket } from '../api';
 
 const ChatMessageInput = () => {
   const { username } = useAuth();
@@ -18,6 +18,7 @@ const ChatMessageInput = () => {
   const channelId = useSelector(selectCurrentChannelId);
   const inputRef = useRef(null);
   const { t } = useContext(LocalesContext);
+  const { emitNewMessage } = useWebSocket();
 
   useEffect(() => {
     if (inputRef.current) {

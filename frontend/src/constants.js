@@ -5,13 +5,4 @@ export const ROUTER_PATHS = {
   SIGN_UP: '/signup',
 };
 
-export const SOCKET_EVENTS = {
-  NEW_CHANNEL: 'newChannel',
-  NEW_MESSAGE: 'newMessage',
-  REMOVE_CHANNEL: 'removeChannel',
-  RENAME_CHANNEL: 'renameChannel',
-};
-
 export const GENERAL_CHANNEL_ID = 1;
-
-export const SOCKET_TIMEOUT = 5000;

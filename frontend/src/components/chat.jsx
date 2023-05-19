@@ -1,20 +1,18 @@
 import { useEffect } from 'react';
 import { Col } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { SOCKET_EVENTS } from '../constants';
 import { addMessage } from '../features/chats';
-import { socket } from '../socket';
+import { useWebSocket } from '../api';
 import ChatHeader from './chat-header';
 import ChatMessages from './chat-messages';
 import ChatMessageInput from './chat-message-input';
 
 const Chat = () => {
   const dispatch = useDispatch();
+  const { subscribeOnNewMessage } = useWebSocket();
 
   useEffect(() => {
-    socket.on(SOCKET_EVENTS.NEW_MESSAGE, (payload) => {
-      dispatch(addMessage(payload));
-    });
+    subscribeOnNewMessage((payload) => dispatch(addMessage(payload)));
   }, []);
 
   return (

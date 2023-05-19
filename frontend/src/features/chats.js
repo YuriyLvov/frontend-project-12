@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { GENERAL_CHANNEL_ID } from '../constants';
-import { emitNewChannel, emitRenameChannel } from '../socket';
 
 export const selectChannels = (state) => state.chats.channels;
 export const selectCurrentChannelId = (state) => state.chats.currentChannelId;
@@ -25,36 +24,6 @@ export const selectMessagesCount = (state) => {
 
   return messages?.length || 0;
 };
-
-export const createChannelAction = createAsyncThunk('createChannelAction', async (channelName, thunkApi) => {
-  const state = thunkApi.getState();
-  const channels = selectChannels(state);
-  const channelExists = channels.find((channel) => channel.name === channelName);
-
-  if (channelExists) {
-    return false;
-  }
-
-  try {
-    const result = await emitNewChannel(channelName);
-
-    return { channelName, success: result };
-  } catch (error) {
-    console.error(error);
-    return thunkApi.rejectWithValue(false);
-  }
-});
-
-export const renameChannelAction = createAsyncThunk('renameChannelAction', async (payload, thunkApi) => {
-  try {
-    const result = await emitRenameChannel(payload.id, payload.name);
-
-    return { channelName: payload.name, success: result };
-  } catch (error) {
-    console.error(error);
-    return thunkApi.rejectWithValue(false);
-  }
-});
 
 const initialState = {
   addedChannelName: '',
@@ -113,17 +82,6 @@ export const counterSlice = createSlice({
         return channel;
       });
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(createChannelAction.fulfilled, (state, action) => {
-      const { channelName, success } = action.payload;
-
-      if (success) {
-        state.addedChannelName = channelName;
-      }
-    });
-
-    builder.addCase(renameChannelAction.fulfilled, () => {});
   },
 });
 
