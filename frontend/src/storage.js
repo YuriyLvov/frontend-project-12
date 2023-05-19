@@ -1,3 +1,6 @@
+/* eslint functional/no-class: 0 */
+/* eslint functional/no-this-expression: 0 */
+
 class Storage {
   constructor(storage) {
     this.storage = storage;
