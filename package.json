@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/YuriyLvov/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/YuriyLvov/frontend-project-12/actions)",
+  "description": "The Slack analog SPA. This messager can be used for personal purposes. It has its backend and frontend parts in the same repository.",
   "main": "index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",
@@ -21,11 +21,7 @@
   },
   "homepage": "https://github.com/YuriyLvov/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^1.1.6",
-    "i18next": "^22.4.15",
-    "leo-profanity": "^1.7.0",
-    "react-i18next": "^12.2.2",
-    "react-toastify": "^9.1.2"
+    "@hexlet/chat-server": "^1.1.6"
   },
   "devDependencies": {
     "@playwright/experimental-ct-react": "^1.33.0"

@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { Container, Row } from 'react-bootstrap';
-import { LocalesContext } from '../../context/locales';
+import { LocalesContext } from '../context/locales';
 import {
   selectCurrentChannelName,
   selectMessagesCount,
-} from '../../features/chats';
+} from '../features/chats';
 
 const ChatHeader = () => {
   const currentChannelName = useSelector(selectCurrentChannelName);

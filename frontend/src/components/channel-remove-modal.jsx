@@ -3,7 +3,7 @@ import {
   Button,
   Modal,
 } from 'react-bootstrap';
-import { LocalesContext } from '../../context/locales';
+import { LocalesContext } from '../context/locales';
 
 const ChannelRemoveModal = ({
   show,

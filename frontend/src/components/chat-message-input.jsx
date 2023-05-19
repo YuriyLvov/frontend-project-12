@@ -6,10 +6,10 @@ import {
 } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { AuthContext } from '../../context/auth';
-import { LocalesContext } from '../../context/locales';
-import { selectCurrentChannelId } from '../../features/chats';
-import { emitNewMessage } from '../../socket';
+import { AuthContext } from '../context/auth';
+import { LocalesContext } from '../context/locales';
+import { selectCurrentChannelId } from '../features/chats';
+import { emitNewMessage } from '../socket';
 
 const ChatMessageInput = () => {
   const { username } = useContext(AuthContext);
@@ -44,7 +44,7 @@ const ChatMessageInput = () => {
 
     setDisabled(true);
 
-    emitNewMessage(message, username, channelId, onDone, onError);
+    emitNewMessage({ message, username, channelId }, onDone, onError);
   };
 
   return (

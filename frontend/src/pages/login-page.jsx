@@ -8,11 +8,11 @@ import {
 } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { login } from '../../api';
-import { AuthContext } from '../../context/auth';
-import { LocalesContext } from '../../context/locales';
-import { ROUTER_PATHS } from '../../constants';
-import getSchema from './validator';
+import { login } from '../api';
+import { AuthContext } from '../context/auth';
+import { LocalesContext } from '../context/locales';
+import { ROUTER_PATHS } from '../constants';
+import getSchema from './login-page-validator';
 
 const LoginPage = () => {
   const { setToken, setUsername } = useContext(AuthContext);

@@ -8,11 +8,11 @@ import {
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { signup } from '../../api';
-import { AuthContext } from '../../context/auth';
-import { LocalesContext } from '../../context/locales';
-import { ROUTER_PATHS } from '../../constants';
-import getSchema from './validator';
+import { signup } from '../api';
+import { AuthContext } from '../context/auth';
+import { LocalesContext } from '../context/locales';
+import { ROUTER_PATHS } from '../constants';
+import getSchema from './signup-page-validator';
 
 const SignUpPage = () => {
   const { setToken, setUsername } = useContext(AuthContext);

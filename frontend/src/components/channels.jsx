@@ -13,9 +13,9 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { SOCKET_EVENTS } from '../../constants';
-import { LocalesContext } from '../../context/locales';
-import { emitRemoveChannel, socket } from '../../socket';
+import { SOCKET_EVENTS } from '../constants';
+import { LocalesContext } from '../context/locales';
+import { emitRemoveChannel, socket } from '../socket';
 import {
   addChannel,
   changeActiveChannel,
@@ -25,9 +25,9 @@ import {
   renameChannel,
   selectChannels,
   selectCurrentChannelId,
-} from '../../features/chats';
-import ChannelChangeModal from '../channel-change-modal';
-import ChannelRemoveModal from '../channel-remove-modal';
+} from '../features/chats';
+import ChannelChangeModal from './channel-change-modal';
+import ChannelRemoveModal from './channel-remove-modal';
 
 const Channels = () => {
   const dispatch = useDispatch();

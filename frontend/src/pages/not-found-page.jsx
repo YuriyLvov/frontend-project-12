@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { LocalesContext } from '../../context/locales';
+import { LocalesContext } from '../context/locales';
 
 const NotFoundPage = () => {
   const { t } = useContext(LocalesContext);

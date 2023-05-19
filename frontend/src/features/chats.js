@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { GENERAL_CHANNEL_ID } from '../../constants';
-import { emitNewChannel, emitRenameChannel } from '../../socket';
+import { GENERAL_CHANNEL_ID } from '../constants';
+import { emitNewChannel, emitRenameChannel } from '../socket';
 
 export const selectChannels = (state) => state.chats.channels;
 export const selectCurrentChannelId = (state) => state.chats.currentChannelId;

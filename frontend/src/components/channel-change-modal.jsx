@@ -5,8 +5,8 @@ import {
   Form,
   Modal,
 } from 'react-bootstrap';
-import { LocalesContext } from '../../context/locales';
-import getSchema from './validator';
+import { LocalesContext } from '../context/locales';
+import getSchema from './channel-change-modal-validator';
 
 const ChannelChangeModal = ({
   onAddChannel,

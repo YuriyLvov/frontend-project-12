@@ -6,13 +6,13 @@ import {
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { getData } from '../../api';
-import { ROUTER_PATHS } from '../../constants';
-import { AuthContext } from '../../context/auth';
-import { LocalesContext } from '../../context/locales';
-import { init } from '../../features/chats';
-import Channels from '../../components/channels';
-import Chat from '../../components/chat';
+import { getData } from '../api';
+import { ROUTER_PATHS } from '../constants';
+import { AuthContext } from '../context/auth';
+import { LocalesContext } from '../context/locales';
+import { init } from '../features/chats';
+import Channels from '../components/channels';
+import Chat from '../components/chat';
 
 const MainPage = () => {
   const dispatch = useDispatch();

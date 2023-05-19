@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { Alert, Col } from 'react-bootstrap';
 import filter from 'leo-profanity';
 import cn from 'classnames';
-import { selectMessages } from '../../features/chats';
-import { AuthContext } from '../../context/auth';
+import { selectMessages } from '../features/chats';
+import { AuthContext } from '../context/auth';
 
 const ChatMessages = () => {
   const { username } = useContext(AuthContext);

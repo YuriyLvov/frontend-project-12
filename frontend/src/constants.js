@@ -13,3 +13,5 @@ export const SOCKET_EVENTS = {
 };
 
 export const GENERAL_CHANNEL_ID = 1;
+
+export const SOCKET_TIMEOUT = 5000;
