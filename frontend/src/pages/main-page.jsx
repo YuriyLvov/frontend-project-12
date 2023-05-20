@@ -44,7 +44,7 @@ const MainPage = () => {
         console.error(error);
         handleError();
       });
-  }, [dispatch, token, t, logOut, navigate, handleError]);
+  }, [token]);
 
   return (
     <Row bg="white" className="h-100 flex-md-row border rounded">

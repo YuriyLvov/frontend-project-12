@@ -5,21 +5,20 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { storage } from '../storage';
 
 export const AuthContext = createContext();
 
 const useProvideAuth = () => {
-  const [token, setTokenLocalState] = useState(storage.get('token') || null);
-  const [username, setUserNameLocalState] = useState(storage.get('username') || null);
+  const [token, setTokenLocalState] = useState(localStorage.getItem('token') || null);
+  const [username, setUserNameLocalState] = useState(localStorage.getItem('username') || null);
 
   const setToken = useCallback((newToken) => {
-    storage.set('token', newToken);
+    localStorage.setItem('token', newToken);
     setTokenLocalState(newToken);
   }, [setTokenLocalState]);
 
   const setUsername = useCallback((newUsername) => {
-    storage.set('username', newUsername);
+    localStorage.setItem('username', newUsername);
     setUserNameLocalState(newUsername);
   }, [setUserNameLocalState]);
 

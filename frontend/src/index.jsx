@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { RouterProvider } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import {
   Provider as RollbarProvider,
@@ -11,7 +10,7 @@ import store from './slices';
 import { AuthContextProvider } from './context/auth';
 import { LocalesContextProvider } from './context/locales';
 import reportWebVitals from './reportWebVitals';
-import router from './router';
+import Router from './router';
 import rollbarConfig from './rollbar.json';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,7 +24,7 @@ root.render(
       <Provider store={store}>
         <LocalesContextProvider>
           <AuthContextProvider>
-            <RouterProvider router={router} />
+            <Router />
             <ToastContainer />
           </AuthContextProvider>
         </LocalesContextProvider>

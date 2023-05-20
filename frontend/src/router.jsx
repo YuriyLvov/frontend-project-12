@@ -1,43 +1,46 @@
 import React from 'react';
-import { createBrowserRouter, redirect } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Navigate,
+  Routes,
+  Route,
+} from 'react-router-dom';
 import Layout from './components/layout';
+import { ROUTER_PATHS } from './constants';
+import { useAuth } from './context/auth';
 import LoginPage from './pages/login-page';
 import MainPage from './pages/main-page';
 import NotFoundPage from './pages/not-found-page';
 import SignUpPage from './pages/signup-page';
-import { ROUTER_PATHS } from './constants';
-import { storage } from './storage';
 
-const router = createBrowserRouter([{
-  element: <Layout />,
-  children: [
-    {
-      path: ROUTER_PATHS.MAIN_PAGE,
-      element: <MainPage />,
-      loader: () => {
-        const token = storage.get('token');
+const ProtectedRoute = ({ children }) => {
+  const { token } = useAuth();
 
-        if (!token) {
-          throw redirect(ROUTER_PATHS.LOGIN);
-        }
+  if (!token) {
+    return <Navigate to={ROUTER_PATHS.LOGIN} />;
+  }
 
-        return { token };
-      },
-    },
-    {
-      path: ROUTER_PATHS.LOGIN,
-      element: <LoginPage />,
-    },
-    {
-      path: ROUTER_PATHS.NOT_FOUND,
-      element: <NotFoundPage />,
-    },
-    {
-      path: ROUTER_PATHS.SIGN_UP,
-      element: <SignUpPage />,
-    },
-  ],
+  return children;
+};
 
-}]);
+const AppRoutes = () => (
+  <Routes>
+    <Route element={<Layout />}>
+      <Route
+        element={<ProtectedRoute><MainPage /></ProtectedRoute>}
+        path={ROUTER_PATHS.MAIN_PAGE}
+      />
+      <Route element={<LoginPage />} path={ROUTER_PATHS.LOGIN} />
+      <Route element={<SignUpPage />} path={ROUTER_PATHS.SIGN_UP} />
+      <Route element={<NotFoundPage />} path={ROUTER_PATHS.NOT_FOUND} />
+    </Route>
+  </Routes>
+);
 
-export default router;
+const Router = () => (
+  <BrowserRouter>
+    <AppRoutes />
+  </BrowserRouter>
+);
+
+export default Router;
