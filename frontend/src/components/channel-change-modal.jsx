@@ -6,7 +6,7 @@ import {
   Modal,
 } from 'react-bootstrap';
 import { LocalesContext } from '../context/locales';
-import getSchema from './channel-change-modal-validator';
+import { getChannelChangeSchema } from '../validators';
 
 const ChannelChangeModal = ({
   onAddChannel,
@@ -19,7 +19,7 @@ const ChannelChangeModal = ({
   const onSubmit = initialChannelName ? onRenameChannel : onAddChannel;
   const inputRef = useRef(null);
   const { t } = useContext(LocalesContext);
-  const validator = getSchema(t, channelNames);
+  const validator = getChannelChangeSchema(t, channelNames);
 
   useEffect(() => {
     if (inputRef.current) {

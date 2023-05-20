@@ -12,14 +12,14 @@ import { signup } from '../api';
 import { useAuth } from '../context/auth';
 import { LocalesContext } from '../context/locales';
 import { ROUTER_PATHS } from '../constants';
-import getSchema from './signup-page-validator';
+import { getSignupFormSchema } from '../validators';
 
 const SignUpPage = () => {
   const { setToken, setUsername } = useAuth();
   const inputRef = useRef(null);
   const { t } = useContext(LocalesContext);
   const navigate = useNavigate();
-  const validator = getSchema(t);
+  const validator = getSignupFormSchema(t);
 
   useEffect(() => {
     if (inputRef.current) {

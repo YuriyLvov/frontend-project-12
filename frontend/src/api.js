@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { io } from 'socket.io-client';
-// import { useMemo } from 'react';
 
 const API_PATH = '/api/v1';
 
@@ -27,15 +26,12 @@ const socket = io();
 
 export const useWebSocket = () => {
   const emitNewMessage = (data, onDone, onError) => {
-    console.log('data', data);
-    console.log('onDone', onDone);
-    console.log('onError', onError);
     const { message, username, channelId } = data;
     socket.timeout(SOCKET_TIMEOUT).emit(
       SOCKET_EVENTS.NEW_MESSAGE,
       { body: message, channelId, username },
       (err) => {
-        console.log('err', err);
+        console.error(err);
         if (err) {
           onError(err);
         } else {

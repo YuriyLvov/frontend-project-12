@@ -12,14 +12,14 @@ import { login } from '../api';
 import { useAuth } from '../context/auth';
 import { LocalesContext } from '../context/locales';
 import { ROUTER_PATHS } from '../constants';
-import getSchema from './login-page-validator';
+import { getLoginFormSchema } from '../validators';
 
 const LoginPage = () => {
   const { setToken, setUsername } = useAuth();
   const inputRef = useRef(null);
   const { t } = useContext(LocalesContext);
   const navigate = useNavigate();
-  const validator = getSchema(t);
+  const validator = getLoginFormSchema(t);
 
   useEffect(() => {
     if (inputRef.current) {
