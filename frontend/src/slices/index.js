@@ -1,22 +1,28 @@
 import { configureStore } from '@reduxjs/toolkit';
-import chatsReducer, { counterSlice } from './chats-slice';
+import channelsReducer, { channelsSlice } from './channels-slice';
+import messagesReducer, { messagesSlice } from './messages-slice';
 
 const store = configureStore({
   reducer: {
-    chats: chatsReducer,
+    channels: channelsReducer,
+    messages: messagesReducer,
   },
 });
 
 export default store;
 
 export const {
-  addMessage,
-  init,
+  initChannels,
   addChannel,
   changeActiveChannel,
   removeChannel,
   renameChannel,
-} = counterSlice.actions;
+} = channelsSlice.actions;
+
+export const {
+  addMessage,
+  initMessages,
+} = messagesSlice.actions;
 
 export {
   selectChannels,

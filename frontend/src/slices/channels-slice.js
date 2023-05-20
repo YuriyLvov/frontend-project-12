@@ -5,20 +5,15 @@ import { GENERAL_CHANNEL_ID } from '../constants';
 const initialState = {
   channels: [],
   currentChannelId: 0,
-  messages: [],
 };
 
-export const counterSlice = createSlice({
-  name: 'chats',
+export const channelsSlice = createSlice({
+  name: 'channels',
   initialState,
   reducers: {
-    init: (state, action) => {
+    initChannels: (state, action) => {
       state.channels = action.payload.channels;
       state.currentChannelId = action.payload.currentChannelId;
-      state.messages = action.payload.messages;
-    },
-    addMessage: (state, action) => {
-      state.messages.push(action.payload);
     },
     addChannel: (state, action) => {
       state.channels.push(action.payload);
@@ -41,4 +36,4 @@ export const counterSlice = createSlice({
   },
 });
 
-export default counterSlice.reducer;
+export default channelsSlice.reducer;

@@ -1,5 +1,5 @@
-export const selectChannels = (state) => state.chats.channels;
-export const selectCurrentChannelId = (state) => state.chats.currentChannelId;
+export const selectChannels = (state) => state.channels.channels;
+export const selectCurrentChannelId = (state) => state.channels.currentChannelId;
 export const selectCurrentChannelName = (state) => {
   const channels = selectChannels(state);
   const currentChannelId = selectCurrentChannelId(state);
@@ -13,7 +13,7 @@ export const selectCurrentChannelName = (state) => {
 export const selectMessages = (state) => {
   const currentChannelId = selectCurrentChannelId(state);
 
-  return state.chats.messages.filter((message) => message.channelId === currentChannelId);
+  return state.messages.filter((message) => message.channelId === currentChannelId);
 };
 export const selectMessagesCount = (state) => {
   const messages = selectMessages(state);

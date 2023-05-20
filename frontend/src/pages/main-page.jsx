@@ -10,7 +10,7 @@ import { getData, useWebSocket } from '../api';
 import { ROUTER_PATHS } from '../constants';
 import { useAuth } from '../context/auth';
 import { LocalesContext } from '../context/locales';
-import { init } from '../slices';
+import { initChannels, initMessages } from '../slices';
 import Channels from '../components/channels';
 import Chat from '../components/chat';
 
@@ -37,12 +37,14 @@ const MainPage = () => {
 
     getData({ token })
       .then((response) => {
-        dispatch(init(response.data));
+        const { channels, currentChannelId, messages } = response.data;
+        dispatch(initChannels({ channels, currentChannelId }));
+        dispatch(initMessages({ messages }));
       }).catch((error) => {
         console.error(error);
         handleError();
       });
-  }, [dispatch, token, t, logOut, navigate]);
+  }, [dispatch, token, t, logOut, navigate, handleError]);
 
   return (
     <Row bg="white" className="h-100 flex-md-row border rounded">
