@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useMemo } from 'react';
 import { io } from 'socket.io-client';
 
 const API_PATH = '/api/v1';
@@ -22,9 +23,9 @@ const SOCKET_EVENTS = {
 
 const SOCKET_TIMEOUT = 5000;
 
-const socket = io();
-
 export const useWebSocket = () => {
+  const socket = useMemo(() => io(), []);
+
   const emitNewMessage = (data, onDone, onError) => {
     const { message, username, channelId } = data;
     socket.timeout(SOCKET_TIMEOUT).emit(
@@ -96,6 +97,14 @@ export const useWebSocket = () => {
     });
   };
 
+  const subscribeOnReconnectError = (callback) => {
+    socket.io.on('reconnect_error', (error) => {
+      console.error(error);
+      socket.removeAllListeners();
+      callback();
+    });
+  };
+
   return {
     emitNewMessage,
     emitNewChannel,
@@ -105,5 +114,6 @@ export const useWebSocket = () => {
     subscribeOnNewChannel,
     subscribeOnRemoveChannel,
     subscribeOnRenameChannel,
+    subscribeOnReconnectError,
   };
 };

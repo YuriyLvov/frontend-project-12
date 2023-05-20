@@ -6,7 +6,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { getData } from '../api';
+import { getData, useWebSocket } from '../api';
 import { ROUTER_PATHS } from '../constants';
 import { useAuth } from '../context/auth';
 import { LocalesContext } from '../context/locales';
@@ -19,6 +19,16 @@ const MainPage = () => {
   const { logOut, token } = useAuth();
   const { t } = useContext(LocalesContext);
   const navigate = useNavigate();
+  const { subscribeOnReconnectError } = useWebSocket();
+  const handleError = () => {
+    navigate(ROUTER_PATHS.LOGIN);
+    toast(t('networkError'), { type: 'error' });
+    logOut();
+  };
+
+  useEffect(() => {
+    subscribeOnReconnectError(handleError);
+  }, []);
 
   useEffect(() => {
     if (!token) {
@@ -30,9 +40,7 @@ const MainPage = () => {
         dispatch(init(response.data));
       }).catch((error) => {
         console.error(error);
-        toast(t('networkError'), { type: 'error' });
-        logOut();
-        navigate(ROUTER_PATHS.LOGIN);
+        handleError();
       });
   }, [dispatch, token, t, logOut, navigate]);
 
